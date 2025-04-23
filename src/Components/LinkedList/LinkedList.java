@@ -32,6 +32,9 @@ public abstract class LinkedList {
 
     public void setPrimeiro(LinkedListNode primeiro) {
         this.primeiro = primeiro;
+        if (primeiro != null && primeiro.getNext() == null) {
+            this.ultimo = primeiro;
+        }
     }
 
     public LinkedListNode getUltimo() {
