@@ -6,8 +6,8 @@ import Components.LinkedList.LinkedListNode;
 import java.util.List;
 
 public class LRU extends LinkedList implements IPaginator {
-    public LRU(int capacidade) {
-        super(capacidade);
+    public LRU(int tamanhoMemoria) {
+        super(tamanhoMemoria);
     }
 
     @Override
