@@ -49,8 +49,7 @@ public class LRU extends LinkedList implements IPaginator {
     @Override
     public void Paginar(List<Integer> paginas) {
         for(Integer pagina : paginas){
-            this.addNode(new LinkedListNode(pagina){
-            });
+            this.addNode(new LinkedListNode(pagina));
         }
     }
 }
