@@ -1,6 +1,10 @@
 package Components.LinkedList;
 
-public abstract class LinkedList {
+import Components.ExecutionMetrics;
+
+public abstract class LinkedList  {
+
+    protected ExecutionMetrics executionMetrics = new ExecutionMetrics();
 
     private int capacidade;
 

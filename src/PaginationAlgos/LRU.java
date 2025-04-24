@@ -1,5 +1,6 @@
 package PaginationAlgos;
 
+import Components.ExecutionMetrics;
 import Components.LinkedList.LinkedList;
 import Components.LinkedList.LinkedListNode;
 
@@ -12,6 +13,8 @@ public class LRU extends LinkedList implements IPaginator {
 
     @Override
     public void addNode(LinkedListNode node) {
+        //Start no tempo de execucao da chamada
+        long startTime = System.nanoTime();
         LinkedListNode atual = getPrimeiro();
         LinkedListNode anterior = null;
 
@@ -34,6 +37,7 @@ public class LRU extends LinkedList implements IPaginator {
         // LRU: Se estiver cheia, remove o primeiro (menos recentemente usado)
         if (getTamanho() == getCapacidade()) {
             removeComeco();
+            executionMetrics.incrementTradesNumber();
         }
 
         if (getPrimeiro() == null) {
@@ -44,12 +48,24 @@ public class LRU extends LinkedList implements IPaginator {
         }
 
         setTamanho(getTamanho() + 1);
+
+        // Setando metrica de tempo
+        long endTime = System.nanoTime();
+        executionMetrics.setExecutionTime(endTime - startTime);
     }
 
     @Override
-    public void Paginar(List<Integer> paginas) {
+    public void paginar(List<Integer> paginas) {
+        executionMetrics.clearMetrics();
         for(Integer pagina : paginas){
             this.addNode(new LinkedListNode(pagina));
         }
+    }
+
+    @Override
+    public ExecutionMetrics generateMetrics() {
+        System.out.println("Para o FIFO");
+        executionMetrics.printMetrics();
+        return executionMetrics;
     }
 }

@@ -1,14 +1,16 @@
 package Components.LinkedList;
 
+import Components.Page;
+
 public class LinkedListNode{
 
     private LinkedListNode next;
 
-    private int value;
+    private Page page;
 
 
     public LinkedListNode(int value){
-        this.value = value;
+        this.page = new Page(value);
     }
     public LinkedListNode getNext() {
         return next;
@@ -19,7 +21,7 @@ public class LinkedListNode{
     }
 
     public int getValue() {
-        return value;
+        return page.getValue();
     }
 
 }
