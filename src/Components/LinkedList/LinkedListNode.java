@@ -23,5 +23,12 @@ public class LinkedListNode{
     public int getValue() {
         return page.getValue();
     }
+    public void setValue(int value) {
+        this.page.setValue(value);
+    }
+
+    public Page getPage(){
+        return page;
+    }
 
 }

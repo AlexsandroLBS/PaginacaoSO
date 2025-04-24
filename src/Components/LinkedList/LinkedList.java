@@ -51,14 +51,21 @@ public abstract class LinkedList  {
 
     public abstract void addNode(LinkedListNode node);
 
-    public void removeComeco(){
+    protected void removeComeco(){
         if(primeiro != null){
             tamanho--;
             primeiro = primeiro.getNext();
         }
     }
 
-    public void removeFinal(){
+    protected void addFinal(LinkedListNode node){
+        if(tamanho < capacidade){
+            ultimo.setNext(node);
+            ultimo = node;
+        }
+    }
+
+    protected void removeFinal(){
         if(primeiro == null){
             return;
         }

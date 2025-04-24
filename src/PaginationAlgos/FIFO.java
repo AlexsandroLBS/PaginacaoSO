@@ -44,6 +44,7 @@ public class FIFO extends LinkedList implements IPaginator {
             assert last != null;
             last.setNext(node);
         }
+        setUltimo(node);
 
         // Setando metrica de tempo
         long endTime = System.nanoTime();

@@ -1,5 +1,7 @@
+import PaginationAlgos.Clock;
 import PaginationAlgos.FIFO;
 import PaginationAlgos.LRU;
+import PaginationAlgos.NFU;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +23,14 @@ public class Main {
         lru.printLista();
         lru.generateMetrics();
 
+//        Clock clock = new Clock(tamanhoMemoria);
+//        clock.paginar(paginas);
+//        clock.printLista();
+//        clock.generateMetrics();
 
+        NFU nfu = new NFU(tamanhoMemoria);
+        nfu.paginar(paginas);
+        nfu.printLista();
+        nfu.generateMetrics();
     }
 }
