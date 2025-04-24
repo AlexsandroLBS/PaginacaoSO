@@ -64,7 +64,7 @@ public class LRU extends LinkedList implements IPaginator {
 
     @Override
     public ExecutionMetrics generateMetrics() {
-        System.out.println("Para o FIFO");
+        System.out.println("Para o LRU");
         executionMetrics.printMetrics();
         return executionMetrics;
     }
