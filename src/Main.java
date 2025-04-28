@@ -16,12 +16,12 @@ public class Main {
         FIFO fifo = new FIFO(tamanhoMemoria);
         fifo.paginar(paginas);
         fifo.printLista();
-        fifo.generateMetrics();
+        var fifoMetrics = fifo.generateMetrics();
 
         LRU lru = new LRU(tamanhoMemoria);
         lru.paginar(paginas);
         lru.printLista();
-        lru.generateMetrics();
+        var lruMetrics = lru.generateMetrics();
 
 //        Clock clock = new Clock(tamanhoMemoria);
 //        clock.paginar(paginas);
@@ -31,6 +31,6 @@ public class Main {
         NFU nfu = new NFU(tamanhoMemoria);
         nfu.paginar(paginas);
         nfu.printLista();
-        nfu.generateMetrics();
+        var nfuMetrics = nfu.generateMetrics();
     }
 }
