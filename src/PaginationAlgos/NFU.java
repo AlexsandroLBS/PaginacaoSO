@@ -15,6 +15,11 @@ public class NFU extends LinkedList implements IPaginator {
     @Override
     public void addNode(LinkedListNode node) {
         long startTime = System.nanoTime();
+
+//        boolean shouldBePaged = executionMetrics.verifyVisited(node.getValue());
+//
+//        var alreadyPaged = false;
+
         var aux = getPrimeiro();
         var notFrequenlyUsed = getPrimeiro();
         var idx = 0;
@@ -32,6 +37,8 @@ public class NFU extends LinkedList implements IPaginator {
             aux = aux.getNext();
         }
 
+        executionMetrics.incrementPageMissing();
+
         if (getCapacidade() == getTamanho()) {
             removerPosicao(notFrequenlyUsedIndex);
             executionMetrics.incrementTradesNumber();
@@ -42,6 +49,11 @@ public class NFU extends LinkedList implements IPaginator {
         } else {
             getUltimo().setNext(node);
         }
+
+
+//        if(shouldBePaged) {
+//            executionMetrics.incrementPageMissing();
+//        }
         setUltimo(node);
 
         setTamanho(getTamanho() + 1);

@@ -15,6 +15,12 @@ public class LRU extends LinkedList implements IPaginator {
     public void addNode(LinkedListNode node) {
         //Start no tempo de execucao da chamada
         long startTime = System.nanoTime();
+
+
+//        boolean shouldBePaged = executionMetrics.verifyVisited(node.getValue());
+
+        boolean alreadyPaged = false;
+
         LinkedListNode atual = getPrimeiro();
         LinkedListNode anterior = null;
 
@@ -28,6 +34,7 @@ public class LRU extends LinkedList implements IPaginator {
                 }
 
                 setTamanho(getTamanho() - 1);
+                alreadyPaged = true;
                 break;
             }
             anterior = atual;
@@ -35,10 +42,18 @@ public class LRU extends LinkedList implements IPaginator {
         }
 
         // LRU: Se estiver cheia, remove o primeiro (menos recentemente usado)
-        if (getTamanho() == getCapacidade()) {
-            removeComeco();
-            executionMetrics.incrementTradesNumber();
+//        if (getTamanho() == getCapacidade()) {
+//            removeComeco();
+//            executionMetrics.incrementTradesNumber();
+//        }
+        if (!alreadyPaged) {
+            if (getTamanho() == getCapacidade()) {
+                removeComeco();
+                executionMetrics.incrementTradesNumber();
+            }
+            executionMetrics.incrementPageMissing();
         }
+
 
         if (getPrimeiro() == null) {
             setPrimeiro(node);
