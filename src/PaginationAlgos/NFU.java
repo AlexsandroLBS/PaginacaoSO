@@ -15,49 +15,65 @@ public class NFU extends LinkedList implements IPaginator {
     @Override
     public void addNode(LinkedListNode node) {
         long startTime = System.nanoTime();
+
+        // Caso especial: lista vazia
+        if (getPrimeiro() == null) {
+            setPrimeiro(node);
+            setUltimo(node);
+            setTamanho(1);
+            executionMetrics.incrementPageMissing();
+            long endTime = System.nanoTime();
+            executionMetrics.setExecutionTime(endTime - startTime);
+            return;
+        }
+
+        // Verifica se a página já está na memória e atualiza contador de uso
         var aux = getPrimeiro();
-        var notFrequenlyUsed = getPrimeiro();
+        var notFrequentlyUsed = getPrimeiro();
         var idx = 0;
-        var notFrequenlyUsedIndex = 0;
-        while (aux != null){
-            if(node.getValue() == aux.getValue()){
+        var notFrequentlyUsedIndex = 0;
+
+        while (aux != null) {
+            if (node.getValue() == aux.getValue()) {
                 aux.getPage().addUse();
+                long endTime = System.nanoTime();
+                executionMetrics.setExecutionTime(endTime - startTime);
                 return;
             }
-            if(aux.getPage().getUses() < notFrequenlyUsed.getPage().getUses()){
-                notFrequenlyUsed = aux;
-                notFrequenlyUsedIndex = idx;
+
+            if (aux.getPage().getUses() < notFrequentlyUsed.getPage().getUses()) {
+                notFrequentlyUsed = aux;
+                notFrequentlyUsedIndex = idx;
             }
+
             idx++;
             aux = aux.getNext();
         }
 
+        // Página não encontrada: falta de página
+        executionMetrics.incrementPageMissing();
+
+        // Se a memória estiver cheia, remove a menos usada
         if (getCapacidade() == getTamanho()) {
-            removerPosicao(notFrequenlyUsedIndex);
+            removerPosicao(notFrequentlyUsedIndex);
             executionMetrics.incrementTradesNumber();
         }
 
-        if (getPrimeiro() == null) {
-            setPrimeiro(node);
-        } else {
-            getUltimo().setNext(node);
-        }
+        // Insere a nova página no final
+        getUltimo().setNext(node);
         setUltimo(node);
-
         setTamanho(getTamanho() + 1);
 
-        // Setando metrica de tempo
+        // Métrica de tempo
         long endTime = System.nanoTime();
         executionMetrics.setExecutionTime(endTime - startTime);
     }
 
-
     @Override
     public void paginar(List<Integer> paginas) {
         executionMetrics.clearMetrics();
-        for(Integer pagina : paginas){
-            this.addNode(new LinkedListNode(pagina){
-            });
+        for (Integer pagina : paginas) {
+            this.addNode(new LinkedListNode(pagina));
         }
     }
 
@@ -68,15 +84,13 @@ public class NFU extends LinkedList implements IPaginator {
         return executionMetrics;
     }
 
-
     public void removerPosicao(int posicao) {
-        if (posicao < 0 || posicao >= getTamanho()) return; // Posição inválida
+        if (posicao < 0 || posicao >= getTamanho()) return;
 
-        // Caso especial: remover o primeiro nó
         if (posicao == 0) {
             setPrimeiro(getPrimeiro().getNext());
             if (getPrimeiro() == null) {
-                setUltimo(null); // Lista ficou vazia
+                setUltimo(null);
             }
         } else {
             LinkedListNode anterior = getPrimeiro();
@@ -87,13 +101,11 @@ public class NFU extends LinkedList implements IPaginator {
             LinkedListNode aRemover = anterior.getNext();
             anterior.setNext(aRemover.getNext());
 
-            // Se o último foi removido, atualize o ponteiro 'ultimo'
             if (aRemover == getUltimo()) {
                 setUltimo(anterior);
             }
         }
 
-        setTamanho(getTamanho() - 1); // Atualiza o tamanho da lista
+        setTamanho(getTamanho() - 1);
     }
-
 }

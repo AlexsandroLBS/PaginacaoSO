@@ -22,7 +22,6 @@ public class FIFO extends LinkedList implements IPaginator {
 
         while (aux != null) {
             if (aux.getValue() == node.getValue()) {
-                System.out.println("O valor " + node.getValue() + " já está paginado.");
                 return;
             }
             last = aux;
@@ -44,6 +43,10 @@ public class FIFO extends LinkedList implements IPaginator {
             assert last != null;
             last.setNext(node);
         }
+
+        //Setando metrica de falta de pagina
+        executionMetrics.incrementPageMissing();
+
         setUltimo(node);
 
         // Setando metrica de tempo
