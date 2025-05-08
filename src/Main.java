@@ -40,17 +40,41 @@ public class Main {
             FIFO fifo = new FIFO(tamanhoMemoria);
             fifo.paginar(casosDeTeste.get(i));
             fifo.printLista();
-            fifo.generateMetrics();
+            var fifoMetrics = fifo.generateMetrics();
 
             LRU lru = new LRU(tamanhoMemoria);
             lru.paginar(casosDeTeste.get(i));
             lru.printLista();
-            lru.generateMetrics();
+            var lruMetrics = lru.generateMetrics();
 
             NFU nfu = new NFU(tamanhoMemoria);
             nfu.paginar(casosDeTeste.get(i));
             nfu.printLista();
-            nfu.generateMetrics();
+            var nfuMetrics = nfu.generateMetrics();
+
+
+            // Comparando o número de faltas de página
+            int fifoFaults = fifoMetrics.getPageMissing();
+            int lruFaults = lruMetrics.getPageMissing();
+            int nfuFaults = nfuMetrics.getPageMissing();
+
+            System.out.println("Faltas de página:");
+            System.out.println("FIFO: " + fifoFaults);
+            System.out.println("LRU: " + lruFaults);
+            System.out.println("NFU: " + nfuFaults);
+
+            if (fifoFaults == lruFaults && lruFaults == nfuFaults) {
+                System.out.println("\033[31mTodos os algoritmos tiveram o mesmo número de faltas de página.\033[0m");
+            } else {
+                if (fifoFaults <= lruFaults && fifoFaults <= nfuFaults) {
+                    System.out.println("\033[32mFIFO teve o menor número de faltas de página.\033[0m");
+                } else if (lruFaults <= fifoFaults && lruFaults <= nfuFaults) {
+                    System.out.println("\033[32mLRU teve o menor número de faltas de página.\033[0m");
+                } else {
+                    System.out.println("\033[32mNFU teve o menor número de faltas de página.\033[0m");
+                }
+
+            }
 
             System.out.println("----------------------------");
         }

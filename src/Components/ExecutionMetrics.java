@@ -41,6 +41,11 @@ public class ExecutionMetrics{
         this.pageMissing++;
     }
 
+    public int getPageMissing(){
+        return this.pageMissing;
+    }
+
+
     public void setExecutionTime(long executionTime){
         this.executionTime = executionTime;
     }
