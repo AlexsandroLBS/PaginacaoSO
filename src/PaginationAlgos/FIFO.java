@@ -17,8 +17,6 @@ public class FIFO extends LinkedList implements IPaginator {
         //Start no tempo de execucao da chamada
         long startTime = System.nanoTime();
 
-//        boolean shouldBePaged = executionMetrics.verifyVisited(node.getValue());
-
         var aux = getPrimeiro();
         LinkedListNode last = null;
 
@@ -46,11 +44,8 @@ public class FIFO extends LinkedList implements IPaginator {
             last.setNext(node);
         }
 
+        //Setando metrica de falta de pagina
         executionMetrics.incrementPageMissing();
-
-//        if(shouldBePaged) {
-//            executionMetrics.incrementPageMissing();
-//        }
 
         setUltimo(node);
 

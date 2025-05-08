@@ -7,30 +7,32 @@ import Components.LinkedList.LinkedListNode;
 import java.util.List;
 
 public class LRU extends LinkedList implements IPaginator {
+
     public LRU(int tamanhoMemoria) {
         super(tamanhoMemoria);
     }
 
     @Override
     public void addNode(LinkedListNode node) {
-        //Start no tempo de execucao da chamada
         long startTime = System.nanoTime();
-
-
-//        boolean shouldBePaged = executionMetrics.verifyVisited(node.getValue());
-
         boolean alreadyPaged = false;
 
         LinkedListNode atual = getPrimeiro();
         LinkedListNode anterior = null;
 
-        //Logica para validar se o valor ja estava na lista ou nao
+        // Verifica se o valor já está na lista
         while (atual != null) {
             if (atual.getValue() == node.getValue()) {
+                // Remove o nó atual
                 if (anterior == null) {
                     setPrimeiro(atual.getNext());
                 } else {
                     anterior.setNext(atual.getNext());
+                }
+
+                // Ajusta o ponteiro do último, se necessário
+                if (atual == getUltimo()) {
+                    setUltimo(anterior);
                 }
 
                 setTamanho(getTamanho() - 1);
@@ -41,11 +43,7 @@ public class LRU extends LinkedList implements IPaginator {
             atual = atual.getNext();
         }
 
-        // LRU: Se estiver cheia, remove o primeiro (menos recentemente usado)
-//        if (getTamanho() == getCapacidade()) {
-//            removeComeco();
-//            executionMetrics.incrementTradesNumber();
-//        }
+        // Se for uma nova página
         if (!alreadyPaged) {
             if (getTamanho() == getCapacidade()) {
                 removeComeco();
@@ -54,9 +52,13 @@ public class LRU extends LinkedList implements IPaginator {
             executionMetrics.incrementPageMissing();
         }
 
+        // Garante que o novo nó não aponta para ninguém
+        node.setNext(null);
 
+        // Adiciona no final da lista
         if (getPrimeiro() == null) {
             setPrimeiro(node);
+            setUltimo(node);
         } else {
             getUltimo().setNext(node);
             setUltimo(node);
@@ -64,7 +66,7 @@ public class LRU extends LinkedList implements IPaginator {
 
         setTamanho(getTamanho() + 1);
 
-        // Setando metrica de tempo
+        // Registra o tempo de execução
         long endTime = System.nanoTime();
         executionMetrics.setExecutionTime(endTime - startTime);
     }
@@ -72,7 +74,7 @@ public class LRU extends LinkedList implements IPaginator {
     @Override
     public void paginar(List<Integer> paginas) {
         executionMetrics.clearMetrics();
-        for(Integer pagina : paginas){
+        for (Integer pagina : paginas) {
             this.addNode(new LinkedListNode(pagina));
         }
     }

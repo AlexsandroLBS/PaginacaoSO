@@ -10,41 +10,29 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        int tamanhoMemoria = 5;
+        int tamanhoMemoria = 3;
 
-        // Caso 1: Sequência com repetições simples
-        List<Integer> paginas1 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 1, 2, 3, 4, 5));
-        // FIFO: 5
-        // LRU: 5
-        // NFU: 5
+        // Caso 1 – Alternância alta
+        // Esperado: FIFO=8, LRU=7, NFU=6
+        List<Integer> caso1 = Arrays.asList(1, 2, 3, 1, 4, 5, 1, 2, 3);
 
-        // Caso 2: Sequência com substituições frequentes
-//        List<Integer> paginas2 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-        // FIFO: 10
-        // LRU: 10
-        // NFU: 10
+        // Caso 2 – Acesso contínuo com reaproveitamento
+        // Esperado: FIFO=3, LRU=3, NFU=3
+        List<Integer> caso2 = Arrays.asList(1, 2, 3, 1, 2, 3, 1, 2, 3);
 
-        // Caso 3: Sequência com padrões repetidos
-//        List<Integer> paginas3 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 1, 2, 6, 7, 1, 2, 3, 4, 5));
-        // FIFO: 10
-        // LRU: 8
-        // NFU: 8
+        // Caso 3 – Substituição completa
+        // Esperado: FIFO=7, LRU=7, NFU=7
+        List<Integer> caso3 = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
 
-        // Caso 4: Sequência com alta reutilização
-//        List<Integer> paginas4 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 1, 2, 3, 4, 5));
-        // FIFO: 5
-        // LRU: 5
-        // NFU: 5
+        // Caso 4 – Reutilização com atraso
+        // Esperado: FIFO=8, LRU=6, NFU=6
+        List<Integer> caso4 = Arrays.asList(1, 2, 3, 4, 1, 2, 3, 4);
 
-        // Caso 5: Sequência com substituições alternadas
-//        List<Integer> paginas5 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 1, 2, 7, 8, 9, 10));
-        // FIFO: 10
-        // LRU: 9
-        // NFU: 9
+        // Caso 5 – Frequência ajuda o NFU
+        // Esperado: FIFO=6, LRU=5, NFU=4
+        List<Integer> caso5 = Arrays.asList(1, 2, 1, 2, 3, 4, 1, 2);
 
-        // Testando os casos
-//        List<List<Integer>> casosDeTeste = Arrays.asList(paginas1, paginas2, paginas3, paginas4, paginas5);
-        List<List<Integer>> casosDeTeste = List.of(paginas1);
+        List<List<Integer>> casosDeTeste = List.of(caso1, caso2, caso3, caso4, caso5);
 
         for (int i = 0; i < casosDeTeste.size(); i++) {
             System.out.println("Caso de Teste " + (i + 1));
