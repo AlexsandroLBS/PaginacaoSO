@@ -110,8 +110,8 @@ Para o Clock
 Tempo de execução: 500 ns
 Número de falta de páginas (page fault): 7
 ================================
+**NFU teve o menor número de faltas de página.**
 ```
-
 
 ## Contribuições
 Este projeto foi desenvolvido em equipe como parte de um trabalho acadêmico. Sugestões e melhorias são bem-vindas!
