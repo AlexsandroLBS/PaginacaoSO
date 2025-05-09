@@ -3,7 +3,6 @@ import PaginationAlgos.FIFO;
 import PaginationAlgos.LRU;
 import PaginationAlgos.NFU;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,27 +50,35 @@ public class Main {
             nfu.paginar(casosDeTeste.get(i));
             nfu.printLista();
             var nfuMetrics = nfu.generateMetrics();
-
+            
+            Clock clock = new Clock(tamanhoMemoria);
+            clock.paginar(casosDeTeste.get(i));
+            clock.printLista();
+            var clockMetrics = clock.generateMetrics();
 
             // Comparando o número de faltas de página
             int fifoFaults = fifoMetrics.getPageMissing();
             int lruFaults = lruMetrics.getPageMissing();
             int nfuFaults = nfuMetrics.getPageMissing();
+            int clockFaults = clockMetrics.getPageMissing();
 
             System.out.println("Faltas de página:");
             System.out.println("FIFO: " + fifoFaults);
             System.out.println("LRU: " + lruFaults);
             System.out.println("NFU: " + nfuFaults);
+            System.out.println("Clock: " + clockFaults);
 
-            if (fifoFaults == lruFaults && lruFaults == nfuFaults) {
+            if (fifoFaults == lruFaults && lruFaults == nfuFaults && nfuFaults == clockFaults) {
                 System.out.println("\033[31mTodos os algoritmos tiveram o mesmo número de faltas de página.\033[0m");
             } else {
-                if (fifoFaults <= lruFaults && fifoFaults <= nfuFaults) {
+                if (fifoFaults <= lruFaults && fifoFaults <= nfuFaults && fifoFaults <= clockFaults) {
                     System.out.println("\033[32mFIFO teve o menor número de faltas de página.\033[0m");
-                } else if (lruFaults <= fifoFaults && lruFaults <= nfuFaults) {
+                } else if (lruFaults <= fifoFaults && lruFaults <= nfuFaults && lruFaults <= clockFaults) {
                     System.out.println("\033[32mLRU teve o menor número de faltas de página.\033[0m");
-                } else {
+                } else  if (nfuFaults <= fifoFaults && nfuFaults <= lruFaults && nfuFaults <= clockFaults) {
                     System.out.println("\033[32mNFU teve o menor número de faltas de página.\033[0m");
+                } else {
+                    System.out.println("\033[32mCLOCK teve o menor número de faltas de página.\033[0m");
                 }
 
             }
