@@ -52,7 +52,7 @@ public class ExecutionMetrics{
 
     public void printMetrics() {
         System.out.println("===== Métricas de Execução =====");
-//        System.out.println("Tempo de execução: " + executionTime + " ns (" + (executionTime / 1_000_000.0) + " ms)");
+       System.out.println("Tempo de execução: " + executionTime + " ns (" + (executionTime / 1_000_000.0) + " ms)");
 //        System.out.println("Número de operações (trades): " + tradesNumber);
         System.out.println("Número de falta de páginas (page fault): " + pageMissing);
         System.out.println("================================");

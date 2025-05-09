@@ -1,5 +1,7 @@
 # Projeto de Paginação de Memória
 
+[Clique aqui para acessar o repositório](https://github.com/AlexsandroLBS/PaginacaoSO)
+
 Este projeto foi desenvolvido como parte da disciplina **Projeto de Sistemas Operacionais**. Ele implementa e compara diferentes algoritmos de substituição de páginas em memória, utilizando uma estrutura de lista encadeada para gerenciar as páginas. O objetivo é simular o comportamento de algoritmos de paginação e analisar métricas como faltas de página, trocas de páginas e tempo de execução.
 
 ---
@@ -91,28 +93,23 @@ Memória atual: 1 2 3
 Para o FIFO
 ===== Métricas de Execução =====
 Tempo de execução: 583 ns
-Número de operações (trades): 0
 Número de falta de páginas (page fault): 8
 ================================
 Para o LRU
 ===== Métricas de Execução =====
 Tempo de execução: 417 ns
-Número de operações (trades): 0
 Número de falta de páginas (page fault): 7
 ================================
 Para o NFU
 ===== Métricas de Execução =====
 Tempo de execução: 917 ns
-Número de operações (trades): 0
 Número de falta de páginas (page fault): 6
 ================================
 Para o Clock
 ===== Métricas de Execução =====
 Tempo de execução: 500 ns
-Número de operações (trades): 0
 Número de falta de páginas (page fault): 7
 ================================
-
 ```
 
 
