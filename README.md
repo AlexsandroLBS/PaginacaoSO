@@ -74,9 +74,9 @@ O arquivo `Main.java` é o ponto de entrada do programa. Ele realiza os seguinte
    ```
 
 3. Execute o programa
-  ```bash
-  java -cp out Main
-   ```
+    ```bash
+    java -cp out Main
+    ```
 
 
 ## **Exemplo de Saída**
